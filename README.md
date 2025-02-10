@@ -3,6 +3,8 @@ Este código foi desenvolvido para a matéria MATA54: Estrutura de Dados II
 
 Autor: Pedro Hugo Passos da Silva Carlos
 
+Matrícula: 219115222
+
 ## Contexto Histórico e Relevância
 Introduzida na década de 1970, a quadtree tornou-se fundamental em geometria computacional, gráficos e bancos de dados espaciais. Sua estrutura recursiva permite acesso rápido a dados, sendo crucial para aplicações como detecção de colisões em tempo real, análise geográfica e processamento de imagens multirresolução. Avanços recentes melhoraram sua eficiência, especialmente com grandes conjuntos de dados dinâmicos.
 
@@ -16,13 +18,6 @@ A quadtree divide o espaço 2D em quatro quadrantes de tamanho igual. Cada nó r
 ### Operações Essenciais
 1. **Inserção**: Um ponto é adicionado percorrendo a árvore até o quadrante adequado. Se o quadrante exceder sua capacidade, ele se divide em quatro subquadrantes. Essa operação tem complexidade *O(log N)*, onde *N* é o tamanho do espaço ou dos dados.
 2. **Busca**: Para localizar um ponto ou região, a árvore é percorrida comparando coordenadas com os limites dos quadrantes. A busca reduz rapidamente a área de interesse, também com complexidade *O(log N)*.
-
-### Aplicações
-As quadtrees são ideais para cenários que demandam eficiência espacial:
-- **Compressão de Imagens**: Nós armazenam valores médios de cor de seus quadrantes, com níveis mais profundos capturando detalhes finos (ex: formato JPEG).
-- **Detecção de Colisões**: Identifica sobreposições entre objetos verificando interseções entre quadrantes.
-- **Sistemas de Informação Geográfica (SIG)**: Gerencia consultas espaciais, como busca por proximidade ou intervalos.
-- **Computação Gráfica**: Otimiza renderização e cálculos espaciais.
 
 ### Vantagens e Desvantagens
 - **Vantagens**:
@@ -46,6 +41,15 @@ O desempenho depende de:
 - **Critérios de Parada**: Como tamanho mínimo da célula ou limite de pontos por quadrante.
 - **Balanceamento**: Técnicas para otimizar a profundidade, como pré-ordenação de dados.
 
+### Aplicações
+As quadtrees são ideais para cenários que demandam eficiência espacial:
+- **Compressão de Imagens**: Nós armazenam valores médios de cor de seus quadrantes, com níveis mais profundos capturando detalhes finos (ex: formato JPEG).
+- **Detecção de Colisões**: Identifica sobreposições entre objetos verificando interseções entre quadrantes.
+- **Sistemas de Informação Geográfica (SIG)**: Gerencia consultas espaciais, como busca por proximidade ou intervalos.
+- **Computação Gráfica**: Otimiza renderização e cálculos espaciais.
+
 ## Conclusão
 A quadtree é uma ferramenta versátil e eficaz para gerenciar dados espaciais 2D. Ao combinar subdivisão hierárquica e adaptabilidade, equilibra granularidade e desempenho, sendo indispensável em áreas como visão computacional, mapeamento geográfico e simulações. Embora desafios como consumo de memória persistam, sua velocidade e flexibilidade garantem relevância contínua no processamento espacial moderno.
+
+## Referências Bibliográficas
 
