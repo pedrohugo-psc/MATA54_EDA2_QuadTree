@@ -1,0 +1,10 @@
+{
+    "svg.preview.background": "custom",
+    "files.associations": {
+        "*.txt": "c",
+        "stdbool.h": "c",
+        "stdio.h": "c",
+        "map_quadtree.h": "c",
+        "quadtree.h": "c"
+    }
+}
