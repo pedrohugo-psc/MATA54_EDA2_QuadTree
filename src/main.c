@@ -17,7 +17,7 @@ int main() {
     int y = 0;
     int data = 0;
 
-    Quad* map = Quad_create((Point){0, 0}, (Point){8, 8});
+    Quad* map = Quad_create((Point){0, 0}, (Point){10, 10});
     
 
     printf("Trabalho sobre Quadtree:\n");
