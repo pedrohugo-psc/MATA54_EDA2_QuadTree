@@ -5,9 +5,6 @@ Autor: Pedro Hugo Passos da Silva Carlos
 
 Matrícula: 219115222
 
-## Contexto Histórico e Relevância
-Introduzida na década de 1970, a quadtree tornou-se fundamental em geometria computacional, gráficos e bancos de dados espaciais. Sua estrutura recursiva permite acesso rápido a dados, sendo crucial para aplicações como detecção de colisões em tempo real, análise geográfica e processamento de imagens multirresolução. Avanços recentes melhoraram sua eficiência, especialmente com grandes conjuntos de dados dinâmicos.
-
 ## Conceito
 
 Uma **Quadtree** é uma estrutura de dados em árvore utilizada para organizar e gerenciar informações espaciais em um espaço bidimensional (2D). Cada nó dessa árvore pode ter até quatro filhos, correspondentes aos quatro quadrantes (noroeste, nordeste, sudoeste, sudeste) de uma região 2D. O nó raiz representa toda a área espacial, e níveis subsequentes subdividem recursivamente esse espaço em quadrantes menores até que condições específicas sejam atendidas, como um tamanho mínimo de célula ou uma densidade máxima de dados. Essa decomposição hierárquica permite indexação espacial eficiente, buscas rápidas e gestão otimizada de dados.
@@ -35,12 +32,6 @@ A quadtree divide o espaço 2D em quatro quadrantes de tamanho igual. Cada nó r
 - **Octree**: Versão 3D que divide o espaço em oito octantes, usada para dados volumétricos.
 - **Hyperoctree**: Generaliza a quadtree para *n* dimensões.
 
-### Considerações de Implementação
-O desempenho depende de:
-- **Distribuição Espacial**: Dados muito agrupados aumentam a profundidade da árvore.
-- **Critérios de Parada**: Como tamanho mínimo da célula ou limite de pontos por quadrante.
-- **Balanceamento**: Técnicas para otimizar a profundidade, como pré-ordenação de dados.
-
 ### Aplicações
 As quadtrees são ideais para cenários que demandam eficiência espacial:
 - **Compressão de Imagens**: Nós armazenam valores médios de cor de seus quadrantes, com níveis mais profundos capturando detalhes finos (ex: formato JPEG).
@@ -50,6 +41,49 @@ As quadtrees são ideais para cenários que demandam eficiência espacial:
 
 ## Conclusão
 A quadtree é uma ferramenta versátil e eficaz para gerenciar dados espaciais 2D. Ao combinar subdivisão hierárquica e adaptabilidade, equilibra granularidade e desempenho, sendo indispensável em áreas como visão computacional, mapeamento geográfico e simulações. Embora desafios como consumo de memória persistam, sua velocidade e flexibilidade garantem relevância contínua no processamento espacial moderno.
+
+## Implmentação do código
+
+Este trabalho tem como objetivo implementar uma estrutura de dados **quadtree** para armazenar pontos em um espaço bidimensional e gerar uma visualização gráfica da estrutura em formato SVG. A quadtree facilita operações de inserção, remoção e busca de pontos, além de organizar os dados de forma espacialmente eficiente.
+
+### Arquivos do Projeto
+
+- **main.c**  
+  Contém a função principal que apresenta um menu interativo para:
+  - Inserir pontos (com coordenadas e valor associado).
+  - Remover pontos existentes.
+  - Buscar pontos na estrutura.
+  
+  Ao encerrar o programa, gera um arquivo SVG que representa a quadtree.
+
+- **quadtree.c**  
+  Define a estrutura e as funções básicas da quadtree, incluindo:
+  - Criação da árvore.
+  - Inserção de pontos (com subdivisão do espaço quando necessário).
+  - Busca e remoção de pontos.
+  - Verificação de limites e profundidade para manter a estrutura eficiente.
+
+- **map_quadtree.c**  
+  Responsável pela geração do arquivo SVG:
+  - Desenha os eixos e as subdivisões da quadtree.
+  - Plota os pontos armazenados, representados por círculos com seus valores.
+
+## Como Rodar o Código
+
+Para compilar e executar o programa, siga os passos abaixo:
+
+1. **Acesse o diretório dos fontes:**  
+   No terminal, navegue até a pasta `src` que contém os arquivos fonte:
+   ```bash
+   cd ./src/
+2. **Compile o código:**  
+   Utilize o compilador GCC para gerar o executável main:
+   ```bash
+   gcc -o main main.c quadtree.c map_quadtree.c
+1. **Execute o programa:**  
+   Após a compilação, rode o executável:
+   ```bash
+   ./main
 
 ## Referências Bibliográficas
 
