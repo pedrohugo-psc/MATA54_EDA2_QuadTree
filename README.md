@@ -1,76 +1,135 @@
 # Quadtree: Estrutura de Dados Espacial
-Este código foi desenvolvido para a matéria MATA54: Estrutura de Dados II
+
+Este projeto implementa uma estrutura de dados **quadtree** para armazenar pontos em um espaço bidimensional e gerar uma visualização gráfica em SVG. A solução foi desenvolvida para a disciplina MATA54: Estrutura de Dados II e se baseia em conceitos amplamente estudados na área de estruturas de dados espaciais.
 
 Autor: Pedro Hugo Passos da Silva Carlos
 
 Matrícula: 219115222
 
-## Conceito
+## Sumário
 
-Uma **Quadtree** é uma estrutura de dados em árvore utilizada para organizar e gerenciar informações espaciais em um espaço bidimensional (2D). Cada nó dessa árvore pode ter até quatro filhos, correspondentes aos quatro quadrantes (noroeste, nordeste, sudoeste, sudeste) de uma região 2D. O nó raiz representa toda a área espacial, e níveis subsequentes subdividem recursivamente esse espaço em quadrantes menores até que condições específicas sejam atendidas, como um tamanho mínimo de célula ou uma densidade máxima de dados. Essa decomposição hierárquica permite indexação espacial eficiente, buscas rápidas e gestão otimizada de dados.
+- [Quadtree: Estrutura de Dados Espacial](#quadtree-estrutura-de-dados-espacial)
+  - [Sumário](#sumário)
+  - [Introdução](#introdução)
+  - [Conceito e Funcionamento](#conceito-e-funcionamento)
+    - [Vantagens e Desvantagens](#vantagens-e-desvantagens)
+  - [Detalhamento da Implementação](#detalhamento-da-implementação)
+    - [Arquivos do Projeto](#arquivos-do-projeto)
+    - [Funções Básicas](#funções-básicas)
+  - [Exemplo de Uso: Detectando Colisões em Jogos](#exemplo-de-uso-detectando-colisões-em-jogos)
+  - [Complexidade Temporal](#complexidade-temporal)
+  - [Como Rodar o Código](#como-rodar-o-código)
+    - [Pré-requisitos](#pré-requisitos)
+    - [Instruções de Compilação e Execução](#instruções-de-compilação-e-execução)
+  - [Conclusão](#conclusão)
+  - [Referências Bibliográficas](#referências-bibliográficas)
 
-### Estrutura e Funcionalidade
-A quadtree divide o espaço 2D em quatro quadrantes de tamanho igual. Cada nó representa uma região e, se um quadrante contém dados (como pontos, linhas ou objetos), ele é subdividido novamente. Esse processo continua até que uma condição de parada seja alcançada, como a presença de um único ponto por quadrante ou uma resolução mínima definida. A estrutura se adapta à densidade dos dados, criando subdivisões mais refinadas em áreas complexas e mantendo regiões mais amplas onde os dados são esparsos.
 
-### Operações Essenciais
-1. **Inserção**: Um ponto é adicionado percorrendo a árvore até o quadrante adequado. Se o quadrante exceder sua capacidade, ele se divide em quatro subquadrantes. Essa operação tem complexidade *O(log N)*, onde *N* é o tamanho do espaço ou dos dados.
-2. **Busca**: Para localizar um ponto ou região, a árvore é percorrida comparando coordenadas com os limites dos quadrantes. A busca reduz rapidamente a área de interesse, também com complexidade *O(log N)*.
+## Introdução
+
+Uma **quadtree** é uma estrutura em árvore que particiona recursivamente um espaço bidimensional em quatro sub-regiões (quadrantes). Essa técnica de divisão hierárquica permite organizar, indexar e acessar dados espaciais de forma eficiente – seja para armazenamento de pontos, linhas, polígonos ou mesmo para processamento de imagens, sistemas de informações geográficas e aplicações em jogos.
+
+O projeto integra conceitos de estudos acadêmicos clássicos sobre estruturas de dados hierárquicas e busca aplicar esses conhecimentos na implementação de um sistema com operações de inserção, remoção e busca de pontos, acompanhado de uma visualização gráfica que ilustra a divisão espacial.
+
+
+## Conceito e Funcionamento
+
+A Quadtree trabalha com os seguintes conceitos:
+
+- **Divisão Espacial:**  
+  O nó raiz representa toda a área 2D e é subdividido em quatro quadrantes (noroeste, nordeste, sudoeste, sudeste). Cada nó que contém mais de um ponto (ou que excede uma capacidade definida) é dividido novamente, formando uma estrutura de árvore.
+
+- **Adaptação à Distribuição:**  
+  Em regiões com muitos dados, a subdivisão é mais fina, enquanto em áreas esparsas os blocos permanecem maiores, o que ajuda na eficiência das buscas e no processamento espacial.
+
+- **Operações Básicas:**
+  - **Inserção:** Percorre a árvore até encontrar o quadrante adequado para o ponto. Se o nó encontrado já estiver ocupado, ocorre a subdivisão do nó, que passa a ter quatro filhos, e o processo continua recursivamente.  
+    *Complexidade: Aproximadamente O(log N).*
+    
+  - **Busca:** Compara as coordenadas do ponto com os limites de cada quadrante, avançando pela árvore recursivamente até localizar o dado associado.  
+    *Complexidade: Aproximadamente O(log N).*
+    
+  - **Remoção:** Procura e remove o ponto especificado. Se, após a remoção, um nó e seus irmãos não possuírem dados, pode ocorrer a “colapso” desses nós, recuperando espaço.
+
 
 ### Vantagens e Desvantagens
-- **Vantagens**:
-  - Adapta-se a distribuições não uniformes de dados.
-  - Reduz a complexidade de consultas espaciais.
-  - Dinamismo na gestão de dados densos ou esparsos.
-- **Desvantagens**:
-  - Sobrecarga de memória em dados muito irregulares (excesso de subdivisões).
-  - Complexidade na implementação para dados dinâmicos (atualizações frequentes).
-  - Risco de artefatos em imagens comprimidas se a divisão for muito simplificada.
 
-### Variantes e Extensões
-- **Region Quadtree**: Foca na subdivisão do espaço, comum em processamento de imagens.
-- **Point Quadtree**: Armazena pontos, subdividindo com base em suas localizações (similar a k-d trees).
-- **Octree**: Versão 3D que divide o espaço em oito octantes, usada para dados volumétricos.
-- **Hyperoctree**: Generaliza a quadtree para *n* dimensões.
+**Vantagens:**
+- Adaptação dinâmica à distribuição dos dados.
+- Redução do espaço de busca em consultas espaciais.
+- Possibilidade de compressão de imagens e representação de áreas homogêneas com menos informação.
 
-### Aplicações
-As quadtrees são ideais para cenários que demandam eficiência espacial:
-- **Compressão de Imagens**: Nós armazenam valores médios de cor de seus quadrantes, com níveis mais profundos capturando detalhes finos (ex: formato JPEG).
-- **Detecção de Colisões**: Identifica sobreposições entre objetos verificando interseções entre quadrantes.
-- **Sistemas de Informação Geográfica (SIG)**: Gerencia consultas espaciais, como busca por proximidade ou intervalos.
-- **Computação Gráfica**: Otimiza renderização e cálculos espaciais.
+**Desvantagens:**
+- Em casos de dados muito irregulares ou ruidosos, podem ser gerados muitos nós pequenos, aumentando a sobrecarga de memória.
+- Implementação e manutenção podem ser mais complexas em cenários de dados altamente dinâmicos.
+- Divisões excessivamente simples podem ocasionar artefatos em aplicações de compressão.
 
-## Conclusão
-A quadtree é uma ferramenta versátil e eficaz para gerenciar dados espaciais 2D. Ao combinar subdivisão hierárquica e adaptabilidade, equilibra granularidade e desempenho, sendo indispensável em áreas como visão computacional, mapeamento geográfico e simulações. Embora desafios como consumo de memória persistam, sua velocidade e flexibilidade garantem relevância contínua no processamento espacial moderno.
-
-## Implmentação do código
-
-Este trabalho tem como objetivo implementar uma estrutura de dados **quadtree** para armazenar pontos em um espaço bidimensional e gerar uma visualização gráfica da estrutura em formato SVG. A quadtree facilita operações de inserção, remoção e busca de pontos, além de organizar os dados de forma espacialmente eficiente.
+## Detalhamento da Implementação
 
 ### Arquivos do Projeto
 
 - **main.c**  
-  Contém a função principal que apresenta um menu interativo para:
-  - Inserir pontos (com coordenadas e valor associado).
+  Conta com a função principal e um menu interativo que possibilita:
+  - Inserir pontos (digitando coordenadas e um valor).
   - Remover pontos existentes.
-  - Buscar pontos na estrutura.
-  
-  Ao encerrar o programa, gera um arquivo SVG que representa a quadtree.
+  - Buscar pontos na estrutura.  
+  Ao encerrar, o programa gera um arquivo SVG que representa graficamente a quadtree construída.
 
 - **quadtree.c**  
-  Define a estrutura e as funções básicas da quadtree, incluindo:
-  - Criação da árvore.
-  - Inserção de pontos (com subdivisão do espaço quando necessário).
+  Implementa a Quadtree e inclui funções para:
+  - Criação da árvore com limites definidos.
+  - Inserção de pontos (incluindo a lógica de subdivisão).
   - Busca e remoção de pontos.
-  - Verificação de limites e profundidade para manter a estrutura eficiente.
+  - Verificações de limites e verificação se o nó é folha (para manter a eficiência).
 
 - **map_quadtree.c**  
   Responsável pela geração do arquivo SVG:
   - Desenha os eixos e as subdivisões da quadtree.
-  - Plota os pontos armazenados, representados por círculos com seus valores.
+  - Plota os pontos (utilizando círculos e textos) de forma escalonada.
+  - Cria o arquivo com dimensões escaladas conforme especificado.
+
+### Funções Básicas
+
+- **Inserção:**  
+  A função de inserção verifica se o ponto está dentro dos limites do nó atual. Se o nó for folha e já contiver um ponto, uma subdivisão é realizada, e ambos os pontos (o existente e o novo) são reinseridos nos quadrantes apropriados.
+
+- **Busca:**  
+  A busca percorre a árvore com base nas coordenadas, retornando o nó correspondente se encontrado; caso contrário, retorna que o ponto não foi localizado.
+
+- **Remoção:**  
+  Remove o ponto com base em sua posição e, se possível, realiza a consolidação de nós, eliminando subdivisões desnecessárias.
+
+## Exemplo de Uso: Detectando Colisões em Jogos
+
+Para aplicações como jogos, o mundo do jogo é particionado hierarquicamente com uma quadtree. Nesse cenário:
+
+1. **Organização do Espaço:**  
+   O nó raiz representa o mundo inteiro e, conforme as entidades (como jogadores e obstáculos) são inseridas, ocorre a subdivisão do espaço.
+   
+2. **Inserção Dinâmica:**  
+   Ao adicionar uma entidade, se ela estiver próxima de outras, o nó associada pode ser subdividido para garantir que cada subárea contenha poucos elementos.
+   
+3. **Verificação de Colisões:**  
+   Com a quadtree, apenas entidades da mesma subdivisão (ou de regiões vizinhas, quando a entidade toca uma fronteira) são verificadas, melhorando o desempenho da detecção de colisões.
+   
+## Complexidade Temporal
+
+O uso de quadtrees permite:
+
+- Inserção de cada entidade em aproximadamente *O(log N)*, onde *N* representa a resolução ou tamanho da área espacial.
+- Construção completa da árvore com *N* inserções resulta em uma complexidade de *O(N log N)*.
+- A verificação de colisões dentro dos nós é feita, na prática, em tempo aproximadamente linear *O(N)*, resultando em um tempo total realista em *O(N log N)* na maioria dos cenários.
+
+Essa abordagem é muito mais eficiente que a verificação completa de colisões, que é tipicamente O(N²).
 
 ## Como Rodar o Código
 
-Para compilar e executar o programa, siga os passos abaixo:
+### Pré-requisitos
+
+- Ambiente Linux ou similar com compilador GCC instalado.
+- Acesso ao terminal para compilação e execução.
+
+### Instruções de Compilação e Execução
 
 1. **Acesse o diretório dos fontes:**  
    No terminal, navegue até a pasta `src` que contém os arquivos fonte:
@@ -80,10 +139,22 @@ Para compilar e executar o programa, siga os passos abaixo:
    Utilize o compilador GCC para gerar o executável main:
    ```bash
    gcc -o main main.c quadtree.c map_quadtree.c
-1. **Execute o programa:**  
+3. **Execute o programa:**  
    Após a compilação, rode o executável:
    ```bash
    ./main
+4. **Visualize o arquivo SVG:**   
+  Ao finalizar, o programa gera um SVG (por exemplo, quadtree.svg) que pode ser aberto em qualquer navegador ou editor de imagens compatível para visualizar a estrutura da quadtree.
+
+## Conclusão 
+
+A quadtree é uma estrutura de dados poderosa para o armazenamento e a consulta de informações espaciais. Sua capacidade de adaptação à densidade dos dados e o desempenho em buscas e operações espaciais fazem dela uma ferramenta imprescindível em diversas aplicações, desde compressão de imagens até detecção de colisões em jogos. Este projeto demonstra, por meio de uma implementação em C, como criar, manipular e visualizar uma quadtree de forma eficiente.
 
 ## Referências Bibliográficas
+
+
+  - Samet, H. (1984). The Quadtree and Related Hierarchical Data Structures. Computing Surveys, 16(2).
+  - Finkel, R. A., & Bentley, J. L. (1974). Quad trees: A data structure for retrieval on composite keys. Acta Informatica, 4(1), 1–9.
+  - Bentley, J. L. (1975). Multidimensional binary search trees used for associative searching. Communications of the ACM, 18(9), 509–517.
+
 
